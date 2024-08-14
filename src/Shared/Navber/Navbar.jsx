@@ -1,25 +1,22 @@
-import "./Navbar.css";
 import "animate.css";
 import { useContext, useState } from "react";
-import { AuthContext } from "../../ContextProvider/ContextProvider";
 import { Link, NavLink } from "react-router-dom";
-
-const Navbar = () => {
+import "./Navbar.css";
+import { AuthContext } from "../../ContextProvider/ContextProvider";
+const Navbar2 = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { Logout, user } = useContext(AuthContext);
+
   console.log(user);
+
   return (
     <div>
-      <nav className="relative ">
+      <nav className="relative">
         <div className="container py-4 mx-auto max-w-7xl px-4 lg:px-0">
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="flex items-center justify-between">
               <Link to="/">
-                {/* <img
-                  className="w-24 md:w-32 lg:w-40"
-                  src="https://i.ibb.co/L0v6r6Z/logo-finel-removebg-preview.png"
-                  alt=""
-                /> */} <h1 className="text-4xl font-bold text-pink-800">E-Dokan</h1>
+                <h1 className="font-bold text-4xl text-black"> E-Dokan</h1>
               </Link>
               <div className="flex lg:hidden">
                 <button
@@ -74,18 +71,7 @@ const Navbar = () => {
                 >
                   Home
                 </NavLink>
-                <NavLink
-                  to="/listing"
-                  className="btn  btn-sm border-2 border-gray-300 hover:bg-black hover:text-white "
-                >
-                  Pet Listing
-                </NavLink>
-                <NavLink
-                  to="/campaign"
-                  className="btn btn-sm border-2 border-gray-300 hover:bg-black hover:text-white "
-                >
-                  Donation Campaigns
-                </NavLink>
+
                 <NavLink
                   to="/contract"
                   className="btn btn-sm border-2 border-gray-300 hover:bg-black hover:text-white "
@@ -96,22 +82,27 @@ const Navbar = () => {
 
               <div className="flex items-center mt-4 lg:mt-0">
                 {user ? (
-                  <div className="flex items-center ">
-                    <div className="dropdown dropdown-end">
-                      <div tabIndex={0} role="button">
-                        <div
-                          tabIndex={0}
-                          role="button"
-                          className=" border rounded-full border-gray-300 z-[110]  avatar"
-                        >
-                          <div className=" rounded-full w-9 md:w-12  ">
-                            <img alt="" src={user?.photoURL || ""} />
-                          </div>
-                        </div>
-                      </div>
+                  <div className="flex items-center tooltip">
+                    <div className="dropdown dropdown-end tooltip ">
+                    <div tabIndex={0} role="button" className="relative">
+  <div
+    tabIndex={0}
+    role="button"
+    className="border rounded-full border-gray-300 z-[110] avatar"
+  >
+    <div className="rounded-full w-9 md:w-12">
+      <img className="rounded-full" alt="" src={user?.photoURL || ""} />
+    </div>
+  </div>
+
+
+  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+    Click Me
+  </div>
+</div>
                       <ul
                         tabIndex={0}
-                        className="dropdown-content  flex  z-[100] menu p-2 gap-2 shadow bg-base-100 rounded-box w-64"
+                        className="dropdown-content  rounded-md flex  z-[100] menu p-2 gap-2 shadow bg-base-100  w-52 py-5"
                       >
                         <div className="flex justify-center">
                           <img
@@ -120,31 +111,21 @@ const Navbar = () => {
                             alt=""
                           />
                         </div>
-                        <li className="mx-auto text-xl font-bold ">
-                          ----- {user?.displayName} -----
-                        </li>
-                        <li>
-                          <NavLink
-                            to="/profile"
-                            className="btn btn-sm btn-ghost border-2  border-gray-300 hover:bg-black hover:text-white"
-                          >
-                            Profile
-                          </NavLink>
-                        </li>
-                        <li>
-                          <NavLink
-                            to="/dashBoard"
-                            className="btn btn-sm btn-ghost border-2  border-gray-300 hover:bg-black hover:text-white"
-                          >
-                            DashBoard
-                          </NavLink>
+                        <li className="ml-7 text-xl font-bold ">
+                          {user?.displayName}
                         </li>
 
-                        <button
-                          onClick={Logout}
-                          className="btn btn-sm btn-ghost border-2  border-gray-300 hover:bg-black hover:text-white"
-                        >
-                          Logout
+                        <button onClick={Logout} className="text-start ml-7">
+                          <a
+                            href="#_"
+                            className="relative inline-block px-8 py-2 font-medium group"
+                          >
+                            <span className="absolute text-black inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-teal-400 group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                            <span className="absolute inset-0 w-full h-full bg-white border-2 border-purple-500  group-hover:bg-purple-500 "></span>
+                            <span className="relative text-black font-bold group-hover:text-black">
+                              Logout
+                            </span>
+                          </a>
                         </button>
                       </ul>
                     </div>
@@ -169,4 +150,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar2;

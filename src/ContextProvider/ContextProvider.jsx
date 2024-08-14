@@ -36,7 +36,16 @@ const ContextProvider = ({children}) => {
     const Logout =()=>{
         // setLoading(false)
          signOut(auth)
-         toast.success(' successful Logout ')
+         toast.warning('🥵Login with correct information', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
          return
     }
    

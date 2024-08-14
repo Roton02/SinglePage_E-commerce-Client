@@ -62,7 +62,16 @@ const Register = () => {
     signUp(email, password)
       .then((result) => {
         console.log(result.user);
-        toast.success("Create account succesfully");
+        toast.success('🥳Register Your Account', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
         UpdateUser(name, photoLnk)
           .then((result) => {
             console.log(result);
@@ -82,7 +91,16 @@ const Register = () => {
     googleSignIn()
       .then((result) => {
         console.log(result.user);
-        toast.success(" successful Login  by Google");
+        toast.success('🥳Register Your Account', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
         navigate(location?.state ? location.state : "/");
       })
       .catch((error) => {
@@ -98,7 +116,7 @@ const Register = () => {
         <link rel="canonical" href="https://www.tacobell.com/" />
       </Helmet>
       <div className="flex items-center   w-full max-w-sm mx-auto overflow-hidden   lg:max-w-4xl">
-        <div className="flex flex-col max-w-md mx-auto  mt-5 px-20 ">
+        <div className="flex flex-col max-w-md mx-auto  mt-5 px-10 md:px-20 ">
           <div className=" text-center">
             <h1 className=" text-3xl  text-black font-bold">
               Register to new account

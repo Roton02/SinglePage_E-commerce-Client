@@ -23,7 +23,16 @@ const Login = () => {
     login(email, password)
       .then((result) => {
         console.log(result.user);
-        toast.success(" successful Login ");
+        toast.success('Login Your Account', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
         navigate(location?.state ? location.state : "/");
       })
       .catch((error) => {
@@ -37,7 +46,16 @@ const Login = () => {
     googleSignIn()
       .then((result) => {
         console.log(result.user);
-        toast.success(" successful Login  by Google");
+        toast.success('Login Your Account', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
         navigate(location?.state ? location.state : "/");
       })
       .catch((error) => {
