@@ -10,16 +10,16 @@ const Navbar = () => {
   console.log(user);
   return (
     <div>
-      <nav className="relative bg-gradient-to-r from-[#F9F3F0] from-10% via-[#FCE7DC] via-30% to-[#F9F3F0] to-90% dark:bg-gradient-to-r dark:from-[#f2f2d8] dark:from-10% dark:via-[#FCE7DC] dark:via-30% dark:to-[#fae1d4] ">
+      <nav className="relative ">
         <div className="container py-4 mx-auto max-w-7xl px-4 lg:px-0">
           <div className="lg:flex lg:items-center lg:justify-between">
             <div className="flex items-center justify-between">
               <Link to="/">
-                <img
+                {/* <img
                   className="w-24 md:w-32 lg:w-40"
                   src="https://i.ibb.co/L0v6r6Z/logo-finel-removebg-preview.png"
                   alt=""
-                />
+                /> */} <h1 className="text-4xl font-bold text-pink-800">SPA-E-Commerce</h1>
               </Link>
               <div className="flex lg:hidden">
                 <button
