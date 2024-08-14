@@ -40,7 +40,7 @@ const Footer = () => {
                   <rect x="14" y="11" width="7" height="12" />
                 </svg>
                 <span className="ml-2 text-xl font-bold tracking-wide  uppercase">
-                  Lapse Pet
+                  <h1>E-Dokan</h1>
                 </span>
               </a>
               <div className="mt-4 lg:max-w-sm">

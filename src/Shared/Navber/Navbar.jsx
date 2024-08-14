@@ -19,7 +19,7 @@ const Navbar = () => {
                   className="w-24 md:w-32 lg:w-40"
                   src="https://i.ibb.co/L0v6r6Z/logo-finel-removebg-preview.png"
                   alt=""
-                /> */} <h1 className="text-4xl font-bold text-pink-800">SPA-E-Commerce</h1>
+                /> */} <h1 className="text-4xl font-bold text-pink-800">E-Dokan</h1>
               </Link>
               <div className="flex lg:hidden">
                 <button
