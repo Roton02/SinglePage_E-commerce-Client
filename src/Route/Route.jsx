@@ -7,6 +7,7 @@ import Root from "../Root/Root";
 import Home from "../Home/Home";
 import ErrorPage from "../pages/ErrorePage/ErrorPage";
 import Contract from "../pages/Contract/Contract";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 
   const router = createBrowserRouter([
@@ -17,7 +18,7 @@ import Contract from "../pages/Contract/Contract";
       children: [
         {
           path: '/',
-          element: <Home></Home>
+          element: <PrivateRoute><Home></Home> </PrivateRoute>
         },
         
         {

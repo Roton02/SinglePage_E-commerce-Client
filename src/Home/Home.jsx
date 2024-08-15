@@ -1,15 +1,115 @@
-import { FaArrowAltCircleRight, FaArrowRight } from "react-icons/fa";
+import axios from "axios";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Home = () => {
-    return (
-        <div>
-            <div className="w-full border-2 h-96 ">
-                <div>
-                    <h1 className="text-4xl font-bold">Home <FaArrowRight/> </h1>
-                </div>
-            </div>
+  const [search, setSearch] = useState("");
+  const [allProduct , setAllProduct] = useState([])
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    setSearch(form.serching.value);
+  };
+
+  useEffect(()=>{
+    axios.get('http://localhost:5000/AllProduct')
+    .then(res => setAllProduct(res.data))
+  },[])
+  console.log(allProduct);
+
+  console.log(search);
+  return (
+    <div className="w-full  mt-8 text-black">
+      <div className="">
+        <div className="flex flex-col items-center justify-center">
+          <h1 className="text-4xl font-bold mt-3 bg-clip-text ">
+            {" "}
+            E-Dokan All Product{" "}
+          </h1>
+          <p className="w-2/3 font-bold text-center">
+            {" "}
+            sit amet consectetur adipisicing elit. Nesciunt velit corporis
+            aspernatur ad natus cupiditate vel! Corporis vero . You can get the
+            latest budget smartphones to high-configuration mobile phones at
+            Star Tech. Check below and Order yours now !
+          </p>
         </div>
-    );
+        <div className="flex justify-center max-w-7xl ">
+          <form onSubmit={handleSubmit}>
+            <div className="relative z-10 flex space-x-2  rounded-md mt-2  bg-white w-full">
+              <div className="">
+                <input
+                  type="text"
+                  name="serching"
+                  className="input  border-white bg-white w-full mr-60"
+                  placeholder="Search by Products Name"
+                />
+              </div>
+
+              <div className="flex-[0_0_auto] ">
+                <button
+                  type="submit"
+                  className="size-[46px] text-sm md:w-36 w-20 inline-flex justify-center items-center gap-x-2  font-semibold rounded-lg border border-transparent  disabled:opacity-50 disabled:pointer-events-none text-black"
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div className="grid grid-cols-4 mt-8 gap-2">
+        <div className="border-2 "></div>
+        <div className="border-2 col-span-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"> 
+            {
+                allProduct.map(p => 
+                    <div key={p._id} className="">
+                        <a
+                    href="#"
+                    className="group relative block h-[370px] md:h-96"
+                  >
+                    <span className="absolute inset-0 border-2 border-dashed border-black dark:"></span>
+                    <div className="relative flex h-full transform items-end border-2 border-black  transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2">
+                      <div className="p-4 !pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8">
+                        <img
+                          className="h-56 w-80"
+                          src={p.product_image}
+                          alt="Something is wrong"
+                        />
+
+                        <h2 className="mt-4 text-xl font-medium sm:text-2xl">
+                          {p.product_name}
+                        </h2>
+
+                        <h2 className="mt-4 text-xl font-medium sm:text-2xl">
+                           {p.product_price} Tk
+                        </h2>
+                      </div>
+
+                      <div className="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8">
+                        <figure className="w-full bg-cover">
+                          <img
+                            src={p.product_image}
+                            alt="Something is wrong this image"
+                            className="h-64  w-full"
+                          />
+                        </figure>
+
+                        <p className="mt-4 text-sm ">
+                          {p.brand_name}
+                        </p>
+
+                      
+                      </div>
+                    </div>
+                  </a>
+                    </div>
+                )
+            }
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Home;
