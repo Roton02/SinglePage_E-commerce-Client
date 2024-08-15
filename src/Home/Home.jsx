@@ -1,7 +1,13 @@
+import { FaArrowAltCircleRight, FaArrowRight } from "react-icons/fa";
+
 const Home = () => {
     return (
         <div>
-            <h1>Home comming soon</h1>
+            <div className="w-full border-2 h-96 ">
+                <div>
+                    <h1 className="text-4xl font-bold">Home <FaArrowRight/> </h1>
+                </div>
+            </div>
         </div>
     );
 };

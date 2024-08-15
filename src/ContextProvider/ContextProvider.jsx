@@ -45,8 +45,8 @@ const ContextProvider = ({children}) => {
           draggable: true,
           progress: undefined,
           theme: "dark",
-          });
-         return
+          }); 
+         return  
     }
    
     const UpdateUser = (displayName , photoURL, email) =>{

@@ -84,22 +84,25 @@ const Navbar2 = () => {
                 {user ? (
                   <div className="flex items-center tooltip">
                     <div className="dropdown dropdown-end tooltip ">
-                    <div tabIndex={0} role="button" className="relative">
-  <div
-    tabIndex={0}
-    role="button"
-    className="border rounded-full border-gray-300 z-[110] avatar"
-  >
-    <div className="rounded-full w-9 md:w-12">
-      <img className="rounded-full" alt="" src={user?.photoURL || ""} />
-    </div>
-  </div>
+                      <div tabIndex={0} role="button" className="relative">
+                        <div
+                          tabIndex={0}
+                          role="button"
+                          className="border rounded-full border-gray-300 z-[110] avatar"
+                        >
+                          <div className="rounded-full w-9 md:w-12">
+                            <img
+                              className="rounded-full"
+                              alt=""
+                              src={user?.photoURL || ""}
+                            />
+                          </div>
+                        </div>
 
-
-  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-    Click Me
-  </div>
-</div>
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                          Click Me
+                        </div>
+                      </div>
                       <ul
                         tabIndex={0}
                         className="dropdown-content  rounded-md flex  z-[100] menu p-2 gap-2 shadow bg-base-100  w-52 py-5"
@@ -133,10 +136,10 @@ const Navbar2 = () => {
                 ) : (
                   <Link
                     to="/login"
-                    className="rounded-md btn-sm  m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-[#ff4880] text-[#ff4880] hover:text-white"
+                    className="rounded-md btn-sm  m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-[#fc3297] text-[#fc3297] hover:text-white"
                   >
-                    <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-[#ff4880] top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
-                    <span className="relative text-[#ff4880] transition duration-300 group-hover:text-white ease">
+                    <span className="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-[#fc3297] top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
+                    <span className="relative text-[#fc3297] transition duration-300 group-hover:text-white ease">
                       Login
                     </span>
                   </Link>

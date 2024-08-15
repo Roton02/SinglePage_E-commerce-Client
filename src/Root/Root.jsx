@@ -7,7 +7,7 @@ AOS.init();
 
 const Root = () => {
   return (
-    <div className="mt-4 bg-gradient-to-r from-[#81d3e1]  to-[#ef91ec]">
+    <div className="pt-4 custom-bg " >
       <Navbar></Navbar>
       <div className=" max-w-7xl mx-auto min-h-calc">
         <Outlet></Outlet>
@@ -18,3 +18,5 @@ const Root = () => {
 };
 
 export default Root;
+
+
