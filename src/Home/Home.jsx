@@ -36,7 +36,7 @@ const Home = () => {
   const handleNextPage = () => {
     if (page < totalPages) setPage(page + 1);
   };
-  // console.log(priceValue);
+  console.log(allProduct);
   return (
     <div className="w-full mt-8 text-black">
       <div className="">
@@ -131,9 +131,14 @@ const Home = () => {
                       <h2 className="mt-4 text-xl font-medium sm:text-2xl">
                         {p.product_name}
                       </h2>
+                      <div className="flex gap-10">
                       <h2 className="mt-4 text-xl font-medium sm:text-2xl">
                         {p.product_price} Tk
                       </h2>
+                      <h2 className="mt-4 text-xl font-medium sm:text-2xl">
+                        {p.product_no} 
+                      </h2>
+                      </div>
                     </div>
                     <div className="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8">
                       <figure className="w-full bg-cover">
