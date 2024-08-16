@@ -18,7 +18,7 @@ console.log(search);
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}?search=${search}`
+        `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}?&search=${search}`
       );
       setAllProduct(response.data.products);
       setTotalPages(response.data.totalPages);
