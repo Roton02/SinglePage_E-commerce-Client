@@ -3,32 +3,37 @@ import { useEffect, useState } from "react";
 
 const Home = () => {
   const [search, setSearch] = useState("");
-  const [dateValue , setDateValue] = useState(false)
-  const [priceValue , setPriceValue] = useState(true)
+  const [dateValue, setDateValue] = useState("desc"); // Default date sort to descending
+  const [priceValue, setPriceValue] = useState(true); // Default price sort to low to high
   const [allProduct, setAllProduct] = useState([]);
   const [page, setPage] = useState(1); // Tracks the current page
   const [totalPages, setTotalPages] = useState(1); // Tracks the total pages
   const itemsPerPage = 9;
 
+  // Handle form submission for search
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     setSearch(form.serching.value);
   };
-  console.log(dateValue);
+
+  // Fetch products with sorting and search functionality
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}?&search=${search}&priceValue=${priceValue}&datevalue=${dateValue}`
-      );
-      setAllProduct(response.data.products);
-      setTotalPages(response.data.totalPages);
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}&priceValue=${priceValue}&datevalue=${dateValue}&search=${search}`
+        );
+        setAllProduct(response.data.products);
+        setTotalPages(response.data.totalPages);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
-
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, search]);
-
+  }, [page, search, priceValue, dateValue]); // Added dependencies for priceValue and dateValue
+console.log(allProduct);
+  // Pagination controls
   const handlePrevPage = () => {
     if (page > 1) setPage(page - 1);
   };
@@ -36,12 +41,12 @@ const Home = () => {
   const handleNextPage = () => {
     if (page < totalPages) setPage(page + 1);
   };
-  console.log(allProduct);
+
   return (
     <div className="w-full mt-8 text-black">
       <div className="">
         <div className="flex flex-col items-center justify-center">
-          <h1 className="text-4xl font-bold mt-3 bg-clip-text ">
+          <h1 className="text-4xl font-bold mt-3 bg-clip-text">
             E-Dokan All Product
           </h1>
           <p className="w-2/3 font-bold text-center">
@@ -74,10 +79,14 @@ const Home = () => {
           </form>
         </div>
       </div>
+
       <div className="grid grid-cols-4 mt-8 gap-2">
         <div className="border-2 ">
           <div className="flex flex-col gap-2 mt-2 item-center justify-center">
-            <button className="w-full" onClick={()=> setPriceValue(false)}>
+            <button
+              className="w-full"
+              onClick={() => setPriceValue(false)}
+            >
               <a
                 href="#_"
                 className="relative inline-block px-4 py-2 font-medium group"
@@ -85,11 +94,14 @@ const Home = () => {
                 <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
                 <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
                 <span className="relative text-black group-hover:text-white">
-                  Price High to Low 
+                  Price High to Low
                 </span>
               </a>
             </button>
-            <button onClick={()=> setPriceValue(true)} >
+            <button
+              className="w-full"
+              onClick={() => setPriceValue(true)}
+            >
               <a
                 href="#_"
                 className="relative inline-block px-4 py-2 font-medium group"
@@ -101,7 +113,10 @@ const Home = () => {
                 </span>
               </a>
             </button>
-            <button onClick={()=>setDateValue(true)}>
+            <button
+              className="w-full"
+              onClick={() => setDateValue('asc')}
+            >
               <a
                 href="#_"
                 className="relative inline-block px-4 py-2 font-medium group"
@@ -115,6 +130,7 @@ const Home = () => {
             </button>
           </div>
         </div>
+
         <div className="border-2 col-span-3">
           <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {allProduct.map((p) => (
@@ -132,12 +148,12 @@ const Home = () => {
                         {p.product_name}
                       </h2>
                       <div className="flex gap-10">
-                      <h2 className="mt-4 text-xl font-medium sm:text-2xl">
-                        {p.product_price} Tk
-                      </h2>
-                      <h2 className="mt-4 text-xl font-medium sm:text-2xl">
-                        {p.product_no} 
-                      </h2>
+                        <h2 className="mt-4 text-xl font-medium sm:text-2xl">
+                          {p.product_price} Tk
+                        </h2>
+                        <h2 className="mt-4 text-xl font-medium sm:text-2xl">
+                          {new Date(p.date).toLocaleDateString()}  <span>{p.product_no}</span>
+                        </h2>
                       </div>
                     </div>
                     <div className="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8">
