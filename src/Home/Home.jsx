@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 
 const Home = () => {
   const [search, setSearch] = useState("");
+  const [dateValue , setDateValue] = useState(false)
+  const [priceValue , setPriceValue] = useState(true)
   const [allProduct, setAllProduct] = useState([]);
   const [page, setPage] = useState(1); // Tracks the current page
   const [totalPages, setTotalPages] = useState(1); // Tracks the total pages
@@ -12,20 +14,20 @@ const Home = () => {
     e.preventDefault();
     const form = e.target;
     setSearch(form.serching.value);
-
   };
-console.log(search);
+  console.log(dateValue);
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}?&search=${search}`
+        `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}?&search=${search}&priceValue=${priceValue}&datevalue=${dateValue}`
       );
       setAllProduct(response.data.products);
       setTotalPages(response.data.totalPages);
     };
 
     fetchData();
-  }, [page,search]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, search]);
 
   const handlePrevPage = () => {
     if (page > 1) setPage(page - 1);
@@ -34,7 +36,7 @@ console.log(search);
   const handleNextPage = () => {
     if (page < totalPages) setPage(page + 1);
   };
-
+  // console.log(priceValue);
   return (
     <div className="w-full mt-8 text-black">
       <div className="">
@@ -73,7 +75,46 @@ console.log(search);
         </div>
       </div>
       <div className="grid grid-cols-4 mt-8 gap-2">
-        <div className="border-2 "></div>
+        <div className="border-2 ">
+          <div className="flex flex-col gap-2 mt-2 item-center justify-center">
+            <button className="w-full" onClick={()=> setPriceValue(false)}>
+              <a
+                href="#_"
+                className="relative inline-block px-4 py-2 font-medium group"
+              >
+                <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
+                <span className="relative text-black group-hover:text-white">
+                  Price High to Low 
+                </span>
+              </a>
+            </button>
+            <button onClick={()=> setPriceValue(true)} >
+              <a
+                href="#_"
+                className="relative inline-block px-4 py-2 font-medium group"
+              >
+                <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
+                <span className="relative text-black group-hover:text-white">
+                  Price Low to High
+                </span>
+              </a>
+            </button>
+            <button onClick={()=>setDateValue(true)}>
+              <a
+                href="#_"
+                className="relative inline-block px-4 py-2 font-medium group"
+              >
+                <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+                <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
+                <span className="relative text-black group-hover:text-white">
+                  Newest date
+                </span>
+              </a>
+            </button>
+          </div>
+        </div>
         <div className="border-2 col-span-3">
           <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {allProduct.map((p) => (
@@ -109,29 +150,28 @@ console.log(search);
               </div>
             ))}
           </div>
-           {/* Pagination Controls */}
-      <div className="flex justify-center gap-20 mt-8 space-x-4">
-        <button
-          onClick={handlePrevPage}
-          disabled={page === 1}
-          className="px-4 py-2 bg-pink-400 text-black rounded hover:bg-gray-300"
-        >
-          Prev
-        </button>
-        <p>
-          Page {page} of {totalPages}
-        </p>
-        <button
-          onClick={handleNextPage}
-          disabled={page === totalPages}
-          className="px-4 py-2 bg-pink-700 text-black rounded hover:bg-gray-300"
-        >
-          Next
-        </button>
-      </div>
+          {/* Pagination Controls */}
+          <div className="flex justify-center gap-20 mt-8 space-x-4">
+            <button
+              onClick={handlePrevPage}
+              disabled={page === 1}
+              className="px-4 py-2 bg-pink-400 text-black rounded hover:bg-gray-300"
+            >
+              Prev
+            </button>
+            <p>
+              Page {page} of {totalPages}
+            </p>
+            <button
+              onClick={handleNextPage}
+              disabled={page === totalPages}
+              className="px-4 py-2 bg-pink-700 text-black rounded hover:bg-gray-300"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
-     
     </div>
   );
 };
