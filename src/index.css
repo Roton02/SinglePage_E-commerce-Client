@@ -31,4 +31,6 @@ p{
       radial-gradient(circle at 69% 68%, rgba(234, 234, 234, 0.04) 0%, rgba(234, 234, 234, 0.04) 10%, transparent 10%, transparent 100%),
       linear-gradient(90deg, rgb(228, 46, 222), rgb(63, 61, 215));
   }
-  
+  .card-lavel {
+    clip-path: polygon(9% 0, 90% 3%, 100% 94%, 0 100%)
+  }

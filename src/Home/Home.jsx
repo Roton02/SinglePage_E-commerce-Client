@@ -1,14 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { IoLocationOutline } from "react-icons/io5";
 
 const Home = () => {
   const [search, setSearch] = useState("");
   const [dateValue, setDateValue] = useState("desc"); // Default date sort to descending
   const [priceValue, setPriceValue] = useState(true); // Default price sort to low to high
+  const [category, setCategory] = useState(""); // To track the selected category
+  const [brands, setBrands] = useState([]); // To track selected brands
   const [allProduct, setAllProduct] = useState([]);
   const [page, setPage] = useState(1); // Tracks the current page
   const [totalPages, setTotalPages] = useState(1); // Tracks the total pages
-  const itemsPerPage = 9;
+  const itemsPerPage = 12;
 
   // Handle form submission for search
   const handleSubmit = (e) => {
@@ -17,12 +20,28 @@ const Home = () => {
     setSearch(form.serching.value);
   };
 
-  // Fetch products with sorting and search functionality
+  // Handle brand checkbox selection
+  const handleBrandChange = (brand) => {
+    if (brands.includes(brand)) {
+      setBrands(brands.filter((b) => b !== brand));
+    } else {
+      setBrands([...brands, brand]);
+    }
+  };
+
+  // Handle category selection
+  const handleCategoryChange = (selectedCategory) => {
+    setCategory(selectedCategory);
+  };
+
+  // Fetch products with sorting, search, brand, and category filters
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}&priceValue=${priceValue}&datevalue=${dateValue}&search=${search}`
+          `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}&priceValue=${priceValue}&datevalue=${dateValue}&search=${search}&category=${category}&brands=${brands.join(
+            ","
+          )}`
         );
         setAllProduct(response.data.products);
         setTotalPages(response.data.totalPages);
@@ -31,8 +50,10 @@ const Home = () => {
       }
     };
     fetchData();
-  }, [page, search, priceValue, dateValue]); // Added dependencies for priceValue and dateValue
-console.log(allProduct);
+  }, [page, search, priceValue, dateValue, category, brands]); // Added dependencies for category and brands
+
+  console.log(allProduct);
+
   // Pagination controls
   const handlePrevPage = () => {
     if (page > 1) setPage(page - 1);
@@ -80,13 +101,41 @@ console.log(allProduct);
         </div>
       </div>
 
-      <div className="grid grid-cols-4 mt-8 gap-2">
-        <div className="border-2 ">
-          <div className="flex flex-col gap-2 mt-2 item-center justify-center">
-            <button
-              className="w-full"
-              onClick={() => setPriceValue(false)}
-            >
+      <div className="grid grid-cols-5 mt-8 gap-2">
+        {/* Filters Section */}
+        <div className="border-2 bg-slate-200">
+          <div>
+            <div className="menu-dropdown-toggle bg-slate-200">
+              <div tabIndex={0} role="button" className="m-1">
+                <h1 className="bg-slate-500 text-2xl text-center py-1">
+                  Sort by Product Category
+                </h1>
+              </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-open menu rounded-box z-[1] w-52 p-2 shadow"
+              >
+                <li onClick={() => handleCategoryChange("mobile")}>
+                  <a>Mobile</a>
+                </li>
+                <li onClick={() => handleCategoryChange("tablet")}>
+                  <a>Tablet</a>
+                </li>
+                <li onClick={() => handleCategoryChange("laptop")}>
+                  <a>Laptop</a>
+                </li>
+                <li onClick={() => handleCategoryChange("smartwatch")}>
+                  <a>Smartwatch</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="py-2">
+            <h1 className="bg-slate-500 text-2xl text-center py-1">
+              Sort by Price and Date
+            </h1>
+            <button className="w-full" onClick={() => setPriceValue(false)}>
               <a
                 href="#_"
                 className="relative inline-block px-4 py-2 font-medium group"
@@ -98,10 +147,7 @@ console.log(allProduct);
                 </span>
               </a>
             </button>
-            <button
-              className="w-full"
-              onClick={() => setPriceValue(true)}
-            >
+            <button className="w-full" onClick={() => setPriceValue(true)}>
               <a
                 href="#_"
                 className="relative inline-block px-4 py-2 font-medium group"
@@ -113,10 +159,7 @@ console.log(allProduct);
                 </span>
               </a>
             </button>
-            <button
-              className="w-full"
-              onClick={() => setDateValue('asc')}
-            >
+            <button className="w-full" onClick={() => setDateValue("asc")}>
               <a
                 href="#_"
                 className="relative inline-block px-4 py-2 font-medium group"
@@ -124,54 +167,78 @@ console.log(allProduct);
                 <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
                 <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
                 <span className="relative text-black group-hover:text-white">
-                  Newest date
+                  Newest Date
                 </span>
               </a>
             </button>
           </div>
+
+          <div className="py-3">
+            <h1 className="bg-slate-500 text-2xl text-center py-1">
+              Sort by Brand Name
+            </h1>
+            <div className="grid grid-cols-2 text-center px-2 gap-2 mt-3">
+              {[
+                "TechBrand",
+                "GizmoTech",
+                "EliteTech",
+                "SmartGear",
+                "PhoneWorld",
+                "WearableTech",
+                "NextGen",
+              ].map((brand) => (
+                <div className="form-control" key={brand}>
+                  <label className="cursor-pointer label">
+                    <h1 className="label-text text-xl text-black">{brand}</h1>
+                    <input
+                      type="checkbox"
+                      onChange={() => handleBrandChange(brand)}
+                      className="checkbox checkbox-secondary"
+                    />
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="border-2 col-span-3">
-          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Products Section */}
+        <div className="border-2 col-span-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
             {allProduct.map((p) => (
-              <div key={p._id} className="">
-                <a href="#" className="group relative block h-[370px] md:h-96">
-                  <span className="absolute inset-0 border-2 border-dashed border-black"></span>
-                  <div className="relative flex h-full transform items-end border-2 border-black transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2">
-                    <div className="p-4 !pt-0 transition-opacity group-hover:absolute group-hover:opacity-0 sm:p-6 lg:p-8">
-                      <img
-                        className="h-56 w-80"
-                        src={p.product_image}
-                        alt="Product"
-                      />
-                      <h2 className="mt-4 text-xl font-medium sm:text-2xl">
-                        {p.product_name}
-                      </h2>
-                      <div className="flex gap-10">
-                        <h2 className="mt-4 text-xl font-medium sm:text-2xl">
-                          {p.product_price} Tk
-                        </h2>
-                        <h2 className="mt-4 text-xl font-medium sm:text-2xl">
-                          {new Date(p.date).toLocaleDateString()}  <span>{p.product_no}</span>
-                        </h2>
-                      </div>
-                    </div>
-                    <div className="absolute p-4 opacity-0 transition-opacity group-hover:relative group-hover:opacity-100 sm:p-6 lg:p-8">
-                      <figure className="w-full bg-cover">
-                        <img
-                          src={p.product_image}
-                          alt="Product"
-                          className="h-64 w-full"
-                        />
-                      </figure>
-                      <p className="mt-4 text-sm">{p.brand_name}</p>
-                    </div>
+              <div key={p._id} className="  text-white shadow-xl">
+                <div className="relative p-2">
+                  <figure>
+                    <img
+                      className="w-64 h-52  hover:scale-105 hover:delay-75  object-cover"
+                      src={p.product_image}
+                    />
+                  </figure>
+                  <p className="card-lavel bg-[#f81276] flex items-center gap-2 bg-red absolute py-3 px-7 -bottom-0 left-14 text-white">
+                    <IoLocationOutline size={20} />
+                    <span>{p.product_category}</span>
+                  </p>
+                </div>
+
+                <div className="p-4">
+                  <div className="flex justify-between items-center gap-2">
+                    <h2 className="font-semibold text-2xl text-nowrap ">
+                      {p.product_name}
+                    </h2>
+                    <p className="font-semibold text-red  ">
+                      {p.product_price} TK
+                    </p>
                   </div>
-                </a>
+
+                  <div className="flex  justify-between">
+                    <p>{new Date(p.date).toLocaleDateString()}</p>
+                    <p>{p.brand_name}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
-          {/* Pagination Controls */}
+
           <div className="flex justify-center gap-20 mt-8 space-x-4">
             <button
               onClick={handlePrevPage}
