@@ -45,13 +45,11 @@ const Footer = () => {
               </a>
               <div className="mt-4 lg:max-w-sm">
                 <p className="text-sm text-deep-purple-50">
-                  At our Pet Adoption website, we are dedicated to finding
-                  loving homes for animals in need.
+                You can get the latest budget smartphones to high-configuration mobile phones at Star Tech. Check below and Order yours now!
                 </p>
                 <p className="mt-4 text-sm text-deep-purple-50">
                   We believe in the joy and enrichment pets bring to our lives,
-                  and we are committed to making the adoption process simple,
-                  enjoyable, and rewarding for both pets and adopters.
+                  and we are committed to making .
                 </p>
               </div>
             </div>

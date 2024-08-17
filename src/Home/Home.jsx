@@ -78,10 +78,10 @@ const Home = () => {
             mobile phones at Star Tech. Check below and Order yours now!
           </p>
         </div>
-        <div className="flex justify-center max-w-7xl">
+        <div className="flex justify-center max-w-7xl px-10">
           <form onSubmit={handleSubmit}>
             <div className="relative z-10 flex space-x-2 rounded-md mt-2 bg-white w-full">
-              <div className="">
+              <div className=" ">
                 <input
                   type="text"
                   name="serching"
@@ -104,7 +104,7 @@ const Home = () => {
 
       <div className="grid grid-cols-5 mt-8 gap-2">
         {/* Filters Section */}
-        <div className="border-2 bg-slate-200">
+        <div className="border-2 bg-slate-200 col-span-2 md:col-auto">
           <div className="pb-3">
             <h1 className="bg-slate-400 lg:text-2xl  text-center py-1">
               Filter by Price Range
@@ -115,19 +115,19 @@ const Home = () => {
               onChange={(e) => setPriceRange(e.target.value)}
             >
               <option value="">All Price Ranges</option>
-              <option value="0-50">$0 - $50</option>
-              <option value="50-100">$50 - $100</option>
-              <option value="100-500">$100 - $500</option>
+              <option value="0-50">10K - 20k</option>
+              <option value="50-100">21k - 50k</option>
+              <option value="100-500">51k - 200K</option>
             </select>
           </div>
           <div>
             <div className="menu-dropdown-toggle bg-slate-200">
               <div tabIndex={0} role="button" className="m-1">
                 <h1 className="bg-slate-400 lg:text-2xl text-center py-1">
-                  Sort by Product Category
+                  Sort by  Category
                 </h1>
               </div>
-              <ul tabIndex={0} className="dropdown-open menu  z-[1] w-52 p-2 ">
+              <ul tabIndex={0} className="dropdown-open menu  z-[1] md:w-52 p-2 ">
                 <li onClick={() => handleCategoryChange("mobile")}>
                   <a className="hover:bg-pink-300">Mobile</a>
                 </li>
@@ -198,12 +198,12 @@ const Home = () => {
         </div>
 
         {/* Products Section */}
-        <div className="border-2 col-span-4">
+        <div className="border-2 col-span-3 md:col-span-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
             {allProduct.map((p) => (
               <div key={p._id} className="  text-white shadow-xl">
                 <div className="relative p-2">
-                  <figure>
+                  <figure className="flex justify-center items-center">
                     <img
                       className="w-64 h-52  hover:scale-105 hover:delay-75  object-cover"
                       src={p.product_image}
@@ -215,9 +215,9 @@ const Home = () => {
                   </p>
                 </div>
 
-                <div className="p-4">
+                <div className="md:p-4 px-2 md:px-14 lg:px-3">
                   <div className="flex justify-between items-center gap-2">
-                    <h2 className="font-semibold text-2xl text-nowrap ">
+                    <h2 className="font-semibold text-xl md:text-2xl text-nowrap ">
                       {p.product_name}
                     </h2>
                     <p className="font-semibold text-red  ">
@@ -234,21 +234,21 @@ const Home = () => {
             ))}
           </div>
 
-          <div className="flex justify-center gap-20 mt-8 space-x-4">
+          <div className="flex justify-center items-center md:gap-20 my-4 md:space-x-4">
             <button
               onClick={handlePrevPage}
               disabled={page === 1}
-              className="px-4 py-2 bg-pink-400 text-black rounded hover:bg-gray-300"
+              className=" px-2  bg-pink-500 text-white hover:text-black  rounded hover:bg-gray-300"
             >
               Prev
             </button>
-            <p>
+            <p className="px-2">
               Page {page} of {totalPages}
             </p>
             <button
               onClick={handleNextPage}
               disabled={page === totalPages}
-              className="px-4 py-2 bg-pink-700 text-black rounded hover:bg-gray-300"
+              className="px-2 bg-pink-700 rounded text-white hover:text-black hover:bg-gray-300"
             >
               Next
             </button>
