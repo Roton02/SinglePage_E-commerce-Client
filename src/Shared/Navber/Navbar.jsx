@@ -13,58 +13,17 @@ const Navbar2 = () => {
     <div>
       <nav className="relative">
         <div className="container py-4 mx-auto max-w-7xl px-4 lg:px-0">
-          <div className="lg:flex lg:items-center lg:justify-between">
+          <div className="flex items-center justify-between">
             <div className="flex items-center justify-between">
               <Link to="/">
-                <h1 className="font-bold text-4xl text-black"> E-Dokan</h1>
+                <h1 className="font-bold text-2xl text-nowrap md:text-4xl text-black"> E-Dokan</h1>
               </Link>
-              <div className="flex lg:hidden">
-                <button
-                  onClick={() => setIsOpen(!isOpen)}
-                  type="button"
-                  className=""
-                  aria-label="toggle menu"
-                >
-                  {isOpen ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M4 8h16M4 16h16"
-                      />
-                    </svg>
-                  )}
-                </button>
-              </div>
             </div>
-
             <div
-              className={`flex lg:flex lg:items-center justify-center lg:justify-between  w-full lg:w-auto transition-transform duration-300 ease-in-out 
-              ${isOpen ? "block  " : "hidden"} lg:block`}
+              className={`flex  items-center  justify-between  w-auto transition-transform duration-300 ease-in-out 
+             `}
             >
-              <div className=" flex flex-col  lg:flex-row lg:items-center lg:mx-8 lg:space-x-2 ">
+              <div className=" flex   flex-row items-center mx-8 space-x-2 ">
                 <NavLink
                   to="/"
                   className="btn btn-sm  border-b-2 border-gray-300 hover:bg-black hover:text-white "
@@ -80,7 +39,7 @@ const Navbar2 = () => {
                 </NavLink>
               </div>
 
-              <div className="flex items-center mt-4 lg:mt-0">
+              <div className="flex items-center ">
                 {user ? (
                   <div className="flex items-center tooltip">
                     <div className="dropdown dropdown-end tooltip ">

@@ -4,6 +4,7 @@ import { IoLocationOutline } from "react-icons/io5";
 
 const Home = () => {
   const [search, setSearch] = useState("");
+  const [priceRange, setPriceRange] = useState("");
   const [dateValue, setDateValue] = useState("desc"); // Default date sort to descending
   const [priceValue, setPriceValue] = useState(true); // Default price sort to low to high
   const [category, setCategory] = useState(""); // To track the selected category
@@ -19,6 +20,7 @@ const Home = () => {
     const form = e.target;
     setSearch(form.serching.value);
   };
+  console.log(priceRange);
 
   // Handle brand checkbox selection
   const handleBrandChange = (brand) => {
@@ -41,7 +43,7 @@ const Home = () => {
         const response = await axios.get(
           `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}&priceValue=${priceValue}&datevalue=${dateValue}&search=${search}&category=${category}&brands=${brands.join(
             ","
-          )}`
+          )}&priceRange=${priceRange}`
         );
         setAllProduct(response.data.products);
         setTotalPages(response.data.totalPages);
@@ -50,6 +52,7 @@ const Home = () => {
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, search, priceValue, dateValue, category, brands]); // Added dependencies for category and brands
 
   console.log(allProduct);
@@ -70,11 +73,9 @@ const Home = () => {
           <h1 className="text-4xl font-bold mt-3 bg-clip-text">
             E-Dokan All Product
           </h1>
-          <p className="w-2/3 font-bold text-center">
-            Sit amet consectetur adipisicing elit. Nesciunt velit corporis
-            aspernatur ad natus cupiditate vel! Corporis vero. You can get the
-            latest budget smartphones to high-configuration mobile phones at
-            Star Tech. Check below and Order yours now!
+          <p className="lg:w-2/3 w-full px-2 md:px-10 lg:px-0 font-bold text-center">
+            You can get the latest budget smartphones to high-configuration
+            mobile phones at Star Tech. Check below and Order yours now!
           </p>
         </div>
         <div className="flex justify-center max-w-7xl">
@@ -104,80 +105,74 @@ const Home = () => {
       <div className="grid grid-cols-5 mt-8 gap-2">
         {/* Filters Section */}
         <div className="border-2 bg-slate-200">
+          <div className="pb-3">
+            <h1 className="bg-slate-400 lg:text-2xl  text-center py-1">
+              Filter by Price Range
+            </h1>
+            <select
+              className="py-3  border-2  w-full bg-slate-200 "
+              value={priceRange}
+              onChange={(e) => setPriceRange(e.target.value)}
+            >
+              <option value="">All Price Ranges</option>
+              <option value="0-50">$0 - $50</option>
+              <option value="50-100">$50 - $100</option>
+              <option value="100-500">$100 - $500</option>
+            </select>
+          </div>
           <div>
             <div className="menu-dropdown-toggle bg-slate-200">
               <div tabIndex={0} role="button" className="m-1">
-                <h1 className="bg-slate-500 text-2xl text-center py-1">
+                <h1 className="bg-slate-400 lg:text-2xl text-center py-1">
                   Sort by Product Category
                 </h1>
               </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-open menu rounded-box z-[1] w-52 p-2 shadow"
-              >
+              <ul tabIndex={0} className="dropdown-open menu  z-[1] w-52 p-2 ">
                 <li onClick={() => handleCategoryChange("mobile")}>
-                  <a>Mobile</a>
+                  <a className="hover:bg-pink-300">Mobile</a>
                 </li>
                 <li onClick={() => handleCategoryChange("tablet")}>
-                  <a>Tablet</a>
+                  <a className="hover:bg-pink-300"> Tablet</a>
                 </li>
                 <li onClick={() => handleCategoryChange("laptop")}>
-                  <a>Laptop</a>
+                  <a className="hover:bg-pink-300">Laptop</a>
                 </li>
                 <li onClick={() => handleCategoryChange("smartwatch")}>
-                  <a>Smartwatch</a>
+                  <a className="hover:bg-pink-300">Smartwatch</a>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="py-2">
-            <h1 className="bg-slate-500 text-2xl text-center py-1">
+          <div className="py-2 space-y-2">
+            <h1 className="bg-slate-400 lg:text-2xl text-center py-1">
               Sort by Price and Date
             </h1>
-            <button className="w-full" onClick={() => setPriceValue(false)}>
-              <a
-                href="#_"
-                className="relative inline-block px-4 py-2 font-medium group"
-              >
-                <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
-                <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
-                <span className="relative text-black group-hover:text-white">
-                  Price High to Low
-                </span>
-              </a>
+            <button
+              className="w-full btn rounded-none bg-gray-200 text-black hover:bg-pink-300 text-start"
+              onClick={() => setPriceValue(false)}
+            >
+              Price High to Low
             </button>
-            <button className="w-full" onClick={() => setPriceValue(true)}>
-              <a
-                href="#_"
-                className="relative inline-block px-4 py-2 font-medium group"
-              >
-                <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
-                <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
-                <span className="relative text-black group-hover:text-white">
-                  Price Low to High
-                </span>
-              </a>
+            <button
+              className="w-full btn rounded-none bg-gray-200 text-black hover:bg-pink-300 text-start"
+              onClick={() => setPriceValue(true)}
+            >
+              Price Low to High
             </button>
-            <button className="w-full" onClick={() => setDateValue("asc")}>
-              <a
-                href="#_"
-                className="relative inline-block px-4 py-2 font-medium group"
-              >
-                <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
-                <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
-                <span className="relative text-black group-hover:text-white">
-                  Newest Date
-                </span>
-              </a>
+            <button
+              className="w-full btn rounded-none bg-gray-200 text-black hover:bg-pink-300 text-start"
+              onClick={() => setDateValue("asc")}
+            >
+              Newest Date
             </button>
           </div>
 
           <div className="py-3">
-            <h1 className="bg-slate-500 text-2xl text-center py-1">
+            <h1 className="bg-slate-400 lg:text-2xl text-center py-1">
               Sort by Brand Name
             </h1>
-            <div className="grid grid-cols-2 text-center px-2 gap-2 mt-3">
+            <div className="grid grid-cols-1 lg:grid-cols-2 text-center px-2 gap-2 mt-3">
               {[
                 "TechBrand",
                 "GizmoTech",
