@@ -41,7 +41,7 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}&priceValue=${priceValue}&datevalue=${dateValue}&search=${search}&category=${category}&brands=${brands.join(
+          `https://single-page-e-commerce-server.vercel.app/AllProduct?page=${page}&limit=${itemsPerPage}&priceValue=${priceValue}&datevalue=${dateValue}&search=${search}&category=${category}&brands=${brands.join(
             ","
           )}&priceRange=${priceRange}`
         );
@@ -115,9 +115,9 @@ const Home = () => {
               onChange={(e) => setPriceRange(e.target.value)}
             >
               <option value="">All Price Ranges</option>
-              <option value="0-50">10K - 20k</option>
-              <option value="50-100">21k - 50k</option>
-              <option value="100-500">51k - 200K</option>
+              <option value="0-50">10K - 30k</option>
+              <option value="50-100">31k - 70k</option>
+              <option value="100-500">71k - 200K</option>
             </select>
           </div>
           <div>
