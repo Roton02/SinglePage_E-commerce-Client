@@ -13,6 +13,7 @@ const Home = () => {
   const [page, setPage] = useState(1); // Tracks the current page
   const [totalPages, setTotalPages] = useState(1); // Tracks the total pages
   const itemsPerPage = 12;
+  // const [product , setProduct] = useState([...allProduct])
 
   // Handle form submission for search
   const handleSubmit = (e) => {
@@ -21,7 +22,7 @@ const Home = () => {
     setSearch(form.serching.value);
   };
   console.log(priceRange);
-
+// console.log(product);
   // Handle brand checkbox selection
   const handleBrandChange = (brand) => {
     if (brands.includes(brand)) {
@@ -41,11 +42,12 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://single-page-e-commerce-server.vercel.app/AllProduct?page=${page}&limit=${itemsPerPage}&priceValue=${priceValue}&datevalue=${dateValue}&search=${search}&category=${category}&brands=${brands.join(
+          `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}&priceValue=${priceValue}&datevalue=${dateValue}&search=${search}&category=${category}&brands=${brands.join(
             ","
           )}&priceRange=${priceRange}`
         );
         setAllProduct(response.data.products);
+        // setProduct(response.data.products)
         setTotalPages(response.data.totalPages);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -55,7 +57,21 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, search, priceValue, dateValue, category, brands]); // Added dependencies for category and brands
 
+
+  const sortedProducts = () => {
+    const sortedData = [...allProduct].sort((a, b) => {
+      // Ensure dates are parsed correctly
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateValue === "desc" ? dateB - dateA : dateA - dateB;
+    });
+    setAllProduct(sortedData);
+  };
+
+
+
   console.log(allProduct);
+  // console.log(product);
 
   // Pagination controls
   const handlePrevPage = () => {
@@ -162,7 +178,7 @@ const Home = () => {
             </button>
             <button
               className="w-full btn rounded-none bg-gray-200 text-black hover:bg-pink-300 text-start"
-              onClick={() => setDateValue("asc")}
+              onClick={() => setDateValue(dateValue === "asc" ? "desc" : "asc")}
             >
               Newest Date
             </button>
@@ -226,7 +242,7 @@ const Home = () => {
                   </div>
 
                   <div className="flex  justify-between">
-                    <p>{new Date(p.date).toLocaleDateString()}</p>
+                    <p>{p.date}</p>
                     <p>{p.brand_name}</p>
                   </div>
                 </div>
