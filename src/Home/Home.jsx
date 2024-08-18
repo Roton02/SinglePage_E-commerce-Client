@@ -42,12 +42,12 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}&priceValue=${priceValue}&datevalue=${dateValue}&search=${search}&category=${category}&brands=${brands.join(
+          `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}&priceValue=${priceValue}&search=${search}&category=${category}&brands=${brands.join(
             ","
           )}&priceRange=${priceRange}`
         );
         setAllProduct(response.data.products);
-        // setProduct(response.data.products)
+        // setProduct(response.data.product
         setTotalPages(response.data.totalPages);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -58,16 +58,21 @@ const Home = () => {
   }, [page, search, priceValue, dateValue, category, brands]); // Added dependencies for category and brands
 
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const sortedProducts = () => {
     const sortedData = [...allProduct].sort((a, b) => {
-      // Ensure dates are parsed correctly
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
-      return dateValue === "desc" ? dateB - dateA : dateA - dateB;
+      return dateValue === "desc"
+        ? b.date.localeCompare(a.date)  // Descending order
+        : a.date.localeCompare(b.date); // Ascending order
     });
     setAllProduct(sortedData);
   };
 
+  // Update product list when sorting conditions change
+  useEffect(() => {
+    sortedProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateValue]); // Ensure sorting when dateValue changes
 
 
   console.log(allProduct);
