@@ -5,7 +5,7 @@ import { IoLocationOutline } from "react-icons/io5";
 const Home = () => {
   const [search, setSearch] = useState("");
   const [priceRange, setPriceRange] = useState("");
-  const [dateValue, setDateValue] = useState("desc"); // Default date sort to descending
+  const [dateValue, setDateValue] = useState("asc"); // Default date sort to descending
   const [priceValue, setPriceValue] = useState(true); // Default price sort to low to high
   const [category, setCategory] = useState(""); // To track the selected category
   const [brands, setBrands] = useState([]); // To track selected brands
@@ -13,7 +13,6 @@ const Home = () => {
   const [page, setPage] = useState(1); // Tracks the current page
   const [totalPages, setTotalPages] = useState(1); // Tracks the total pages
   const itemsPerPage = 12;
-  // const [product , setProduct] = useState([...allProduct])
 
   // Handle form submission for search
   const handleSubmit = (e) => {
@@ -21,8 +20,7 @@ const Home = () => {
     const form = e.target;
     setSearch(form.serching.value);
   };
-  console.log(priceRange);
-// console.log(product);
+
   // Handle brand checkbox selection
   const handleBrandChange = (brand) => {
     if (brands.includes(brand)) {
@@ -46,37 +44,23 @@ const Home = () => {
             ","
           )}&priceRange=${priceRange}`
         );
-        setAllProduct(response.data.products);
-        // setProduct(response.data.product
+        let fetchedProducts = response.data.products;
+
+        // Apply date sorting after fetching data
+        fetchedProducts = fetchedProducts.sort((a, b) =>
+          dateValue === "desc"
+            ? new Date(b.date) - new Date(a.date) // Descending
+            : new Date(a.date) - new Date(b.date) // Ascending
+        );
+
+        setAllProduct(fetchedProducts);
         setTotalPages(response.data.totalPages);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, search, priceValue, dateValue, category, brands]); // Added dependencies for category and brands
-
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const sortedProducts = () => {
-    const sortedData = [...allProduct].sort((a, b) => {
-      return dateValue === "desc"
-        ? b.date.localeCompare(a.date)  // Descending order
-        : a.date.localeCompare(b.date); // Ascending order
-    });
-    setAllProduct(sortedData);
-  };
-
-  // Update product list when sorting conditions change
-  useEffect(() => {
-    sortedProducts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dateValue]); // Ensure sorting when dateValue changes
-
-
-  console.log(allProduct);
-  // console.log(product);
+  }, [page, search, priceValue, dateValue, category, brands, priceRange]);
 
   // Pagination controls
   const handlePrevPage = () => {
@@ -138,7 +122,7 @@ const Home = () => {
               <option value="">All Price Ranges</option>
               <option value="0-50">10K - 30k</option>
               <option value="50-100">31k - 70k</option>
-              <option value="100-500">71k - 200K</option>
+              <option value="100-500">71k - Max</option>
             </select>
           </div>
           <div>
@@ -223,58 +207,56 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
             {allProduct.map((p) => (
               <div key={p._id} className="  text-white shadow-xl">
-                <div className="relative p-2">
-                  <figure className="flex justify-center items-center">
-                    <img
-                      className="w-64 h-52  hover:scale-105 hover:delay-75  object-cover"
-                      src={p.product_image}
-                    />
-                  </figure>
-                  <p className="card-lavel bg-[#f81276] flex items-center gap-2 bg-red absolute py-3 px-7 -bottom-0 left-14 text-white">
-                    <IoLocationOutline size={20} />
-                    <span>{p.product_category}</span>
+              <div className="relative p-2">
+                <figure className="flex justify-center items-center">
+                  <img
+                    className="w-64 h-52  hover:scale-105 hover:delay-75  object-cover"
+                    src={p.product_image}
+                  />
+                </figure>
+                <p className="card-lavel bg-[#f81276] flex items-center gap-2 bg-red absolute py-3 px-7 -bottom-0 left-14 text-white">
+                  <IoLocationOutline size={20} />
+                  <span>{p.product_category}</span>
+                </p>
+              </div>
+
+              <div className="md:p-4 px-2 md:px-14 lg:px-3">
+                <div className="flex justify-between items-center gap-2">
+                  <h2 className="font-semibold text-xl md:text-2xl text-nowrap ">
+                    {p.product_name}
+                  </h2>
+                  <p className="font-semibold text-red  ">
+                    {p.product_price} TK
                   </p>
                 </div>
 
-                <div className="md:p-4 px-2 md:px-14 lg:px-3">
-                  <div className="flex justify-between items-center gap-2">
-                    <h2 className="font-semibold text-xl md:text-2xl text-nowrap ">
-                      {p.product_name}
-                    </h2>
-                    <p className="font-semibold text-red  ">
-                      {p.product_price} TK
-                    </p>
-                  </div>
-
-                  <div className="flex  justify-between">
-                    <p>{p.date}</p>
-                    <p>{p.brand_name}</p>
-                  </div>
+                <div className="flex  justify-between">
+                  <p>{p.date}</p>
+                  <p>{p.brand_name}</p>
                 </div>
               </div>
+            </div>
             ))}
           </div>
-
-          <div className="flex justify-center items-center md:gap-20 my-4 md:space-x-4">
-            <button
-              onClick={handlePrevPage}
-              disabled={page === 1}
-              className=" px-2  bg-pink-500 text-white hover:text-black  rounded hover:bg-gray-300"
-            >
-              Prev
-            </button>
-            <p className="px-2">
-              Page {page} of {totalPages}
-            </p>
-            <button
-              onClick={handleNextPage}
-              disabled={page === totalPages}
-              className="px-2 bg-pink-700 rounded text-white hover:text-black hover:bg-gray-300"
-            >
-              Next
-            </button>
-          </div>
         </div>
+      </div>
+
+      {/* Pagination */}
+      <div className="pagination mt-4 flex justify-center">
+        <button
+          onClick={handlePrevPage}
+          disabled={page === 1}
+          className="btn btn-sm btn-primary mx-1"
+        >
+          Prev
+        </button>
+        <button
+          onClick={handleNextPage}
+          disabled={page === totalPages}
+          className="btn btn-sm btn-primary mx-1"
+        >
+          Next
+        </button>
       </div>
     </div>
   );
