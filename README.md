@@ -1,8 +1,20 @@
-# React + Vite
+E-Dokan - E-commerce Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Project Description
+E-Dokan is a comprehensive e-commerce platform built using the MERN stack. It provides users with an efficient interface to explore, search, and purchase products online. Key features include product search, category and brand filtering, price range filtering, sorting options, and Firebase authentication for secure user registration and login.
 
-Currently, two official plugins are available:
+Frontend
+Live Demo: https://guileless-trifle-921e8c.netlify.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Tech Stack:
+
+React.js: For building the user interface.
+Tailwind CSS: For styling and responsive design.
+React Context API: For state management.
+Features:
+
+Product search and filtering.
+Price range and category selection.
+Sorting by price and date.
+Pagination for navigating through product pages.
+Integration with Firebase for user authentication.
