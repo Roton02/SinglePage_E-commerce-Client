@@ -40,17 +40,18 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/AllProduct?page=${page}&limit=${itemsPerPage}&priceValue=${priceValue}&search=${search}&category=${category}&brands=${brands.join(
+          `https://single-page-e-commerce-server.vercel.app/AllProduct/?page=${page}&limit=${itemsPerPage}&priceValue=${priceValue}&search=${search}&category=${category}&brands=${brands.join(
             ","
           )}&priceRange=${priceRange}`
         );
         let fetchedProducts = response.data.products;
 
         // Apply date sorting after fetching data
-        fetchedProducts = fetchedProducts.sort((a, b) =>
-          dateValue === "desc"
-            ? new Date(b.date) - new Date(a.date) // Descending
-            : new Date(a.date) - new Date(b.date) // Ascending
+        fetchedProducts = fetchedProducts.sort(
+          (a, b) =>
+            dateValue === "desc"
+              ? new Date(b.date) - new Date(a.date) // Descending
+              : new Date(a.date) - new Date(b.date) // Ascending
         );
 
         setAllProduct(fetchedProducts);
@@ -129,10 +130,13 @@ const Home = () => {
             <div className="menu-dropdown-toggle bg-slate-200">
               <div tabIndex={0} role="button" className="m-1">
                 <h1 className="bg-slate-400 lg:text-2xl text-center py-1">
-                  Sort by  Category
+                  Sort by Category
                 </h1>
               </div>
-              <ul tabIndex={0} className="dropdown-open menu  z-[1] md:w-52 p-2 ">
+              <ul
+                tabIndex={0}
+                className="dropdown-open menu  z-[1] md:w-52 p-2 "
+              >
                 <li onClick={() => handleCategoryChange("mobile")}>
                   <a className="hover:bg-pink-300">Mobile</a>
                 </li>
@@ -207,35 +211,35 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
             {allProduct.map((p) => (
               <div key={p._id} className="  text-white shadow-xl">
-              <div className="relative p-2">
-                <figure className="flex justify-center items-center">
-                  <img
-                    className="w-64 h-52  hover:scale-105 hover:delay-75  object-cover"
-                    src={p.product_image}
-                  />
-                </figure>
-                <p className="card-lavel bg-[#f81276] flex items-center gap-2 bg-red absolute py-3 px-7 -bottom-0 left-14 text-white">
-                  <IoLocationOutline size={20} />
-                  <span>{p.product_category}</span>
-                </p>
-              </div>
-
-              <div className="md:p-4 px-2 md:px-14 lg:px-3">
-                <div className="flex justify-between items-center gap-2">
-                  <h2 className="font-semibold text-xl md:text-2xl text-nowrap ">
-                    {p.product_name}
-                  </h2>
-                  <p className="font-semibold text-red  ">
-                    {p.product_price} TK
+                <div className="relative p-2">
+                  <figure className="flex justify-center items-center">
+                    <img
+                      className="w-64 h-52  hover:scale-105 hover:delay-75  object-cover"
+                      src={p.product_image}
+                    />
+                  </figure>
+                  <p className="card-lavel bg-[#f81276] flex items-center gap-2 bg-red absolute py-3 px-7 -bottom-0 left-14 text-white">
+                    <IoLocationOutline size={20} />
+                    <span>{p.product_category}</span>
                   </p>
                 </div>
 
-                <div className="flex  justify-between">
-                  <p>{p.date}</p>
-                  <p>{p.brand_name}</p>
+                <div className="md:p-4 px-2 md:px-14 lg:px-3">
+                  <div className="flex justify-between items-center gap-2">
+                    <h2 className="font-semibold text-xl md:text-2xl text-nowrap ">
+                      {p.product_name}
+                    </h2>
+                    <p className="font-semibold text-red  ">
+                      {p.product_price} TK
+                    </p>
+                  </div>
+
+                  <div className="flex  justify-between">
+                    <p>{p.date}</p>
+                    <p>{p.brand_name}</p>
+                  </div>
                 </div>
               </div>
-            </div>
             ))}
           </div>
         </div>
